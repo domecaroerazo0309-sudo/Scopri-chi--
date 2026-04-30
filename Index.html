@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acceso a imagen</title>
+  <style>
+    body { font-family: system-ui, Arial; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    input { padding: 10px; width: 100%; max-width: 360px; }
+    button { padding: 10px 14px; margin-top: 10px; cursor: pointer; }
+    .msg { margin-top: 14px; }
+    img { margin-top: 18px; max-width: 100%; height: auto; border: 1px solid #eee; border-radius: 8px; }
+    .hint { color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h2>Introduce tu código</h2>
+  <p class="hint">Si el código es correcto, se mostrará la imagen.</p>
+
+  <input id="code" placeholder="Ej: A1B2C3" />
+  \
+
+  <button id="btn">Ver imagen</button>
+
+  <div id="msg" class="msg"></div>
+  <div id="imgwrap"></div>
+
+<script>
+  // 1) MAPA: código -> archivo de imagen
+  // Cambia los códigos y nombres de archivo por los tuyos
+  const codes = {
+    "A1B2C3": "img/cliente1.jpg",
+    "X9Y8Z7": "img/cliente2.jpg"
+  };
+
+  function show() {
+    const c = document.getElementById("code").value.trim();
+    const msg = document.getElementById("msg");
+    const imgwrap = document.getElementById("imgwrap");
+
+    msg.textContent = "";
+    imgwrap.innerHTML = "";
+
+    const imgPath = codes[c];
+
+    if (!imgPath) {
+      msg.textContent = "Código inválido. Revisa y prueba otra vez.";
+      return;
+    }
+
+    msg.textContent = "Código correcto.";
+    const img = document.createElement("img");
+    img.src = imgPath;
+    img.alt = "Imagen";
+    imgwrap.appendChild(img);
+  }
+
+  document.getElementById("btn").addEventListener("click", show);
+  document.getElementById("code").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") show();
+  });
+</script>
+</body>
+</html>
